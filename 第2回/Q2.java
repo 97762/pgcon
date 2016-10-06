@@ -1,72 +1,71 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
- 
+
 public class Main {
     public static void main(String args[]) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String line = br.readLine();
         String[] input = line.split(" ");
- 
+
         char mark;
         char number;
         String[] spades = new String[13];
         String[] diamonds = new String[13];
         String[] clubs = new String[13];
         String[] hearts = new String[13];
- 
- 
+
+
         for(int i=0;i<input.length;i++){
             mark = input[i].charAt(0);
             number = input[i].charAt(1);
             if(mark == 'S'){
-                spades = sort(number, spades);
+                setCard(number, spades);
             }
             else if(mark == 'D'){
-                diamonds = sort(number, diamonds);
+                setCard(number, diamonds);
             }
             else if(mark == 'C'){
-                clubs = sort(number, clubs);
+                setCard(number, clubs);
             }
-            else{
-                hearts = sort(number, hearts);
+            else if(mark == 'H'){
+                setCard(number, hearts);
             }
         }
- 
-        if(outputCheck(spades) == 1){
+
+        if(outputCheck(spades) == true){
             System.out.print("S:");
             output(spades);
         }
-        if(outputCheck(diamonds) == 1){
+        if(outputCheck(diamonds) == true){
             System.out.print("D:");
             output(diamonds);
         }
-        if(outputCheck(clubs) == 1){
+        if(outputCheck(clubs) == true){
             System.out.print("C:");
             output(clubs);
         }
-        if(outputCheck(hearts) == 1){
+        if(outputCheck(hearts) == true){
             System.out.print("H:");
             output(hearts);
         }
- 
     }
- 
+
     private static void output(String[] cards){
-        int flag = 0;
+        boolean flag = false;
         for(int j=0;j<cards.length;j++){
-            if(!(cards[j] == null)){
-                if(flag == 1){
+            if(cards[j] != null){
+                if(flag == true){
                     System.out.print(",");
                 }
                 System.out.print(cards[j]);
-                flag = 1;
+                flag = true;
             }
         }
         System.out.println();
     }
- 
-    private static String[] sort(char number, String[] cards){
+
+    private static void setCard(char number, String[] cards){
         if(number == 'A'){
             cards[0] = String.valueOf(number);
         }
@@ -85,17 +84,16 @@ public class Main {
         else{
             cards[(Character.getNumericValue(number))-1] = String.valueOf(number);
         }
-        return cards;
     }
- 
-    private static int outputCheck(String[] cards){
-        int outputflug = 0;
+
+    private static boolean outputCheck(String[] cards){
+        boolean outputFlug = false;
         for(int i=0;i<cards.length;i++){
-            if(!(cards[i] == null)){
-                outputflug = 1;
+            if(cards[i] != null){
+                outputFlug = true;
                 break;
             }
         }
-        return outputflug;
+        return outputFlug;
     }
 }
